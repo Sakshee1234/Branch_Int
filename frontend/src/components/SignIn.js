@@ -15,6 +15,8 @@ import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
+import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -60,6 +62,7 @@ export default function SignIn(props) {
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -72,10 +75,20 @@ export default function SignIn(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    axios.post('http://localhost:4000/signin', {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    }) 
+    .then((response) => {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', response.data.username);
+        if(data.get('row-radio-buttons-group') === 'agent'){
+            navigate('/chat');
+        }
+        else{
+            navigate('/chatcustomer');
+        }
+    })
   };
 
   const validateInputs = () => {
@@ -131,7 +144,7 @@ export default function SignIn(props) {
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="username">Username</FormLabel>
+              <FormLabel htmlFor="email">Username</FormLabel>
               <TextField
                 error={emailError}
                 helperText={emailErrorMessage}
