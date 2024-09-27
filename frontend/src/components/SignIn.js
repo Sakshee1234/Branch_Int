@@ -75,20 +75,32 @@ export default function SignIn(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    axios.post('http://localhost:4000/signin', {
-      email: data.get('email'),
-      password: data.get('password'),
-    }) 
-    .then((response) => {
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('username', response.data.username);
-        if(data.get('row-radio-buttons-group') === 'agent'){
-            navigate('/chat');
-        }
-        else{
-            navigate('/chatcustomer');
-        }
-    })
+    // axios.post('http://localhost:4000/signin', {
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // }) 
+    // .then((response) => {
+    //     localStorage.setItem('token', response.data.token);
+    //     localStorage.setItem('username', response.data.username);
+
+    //     if(data.get('row-radio-buttons-group') === 'agent'){
+    //         navigate('/chat');
+    //         localStorage.setItem('role', 'agent');
+    //     }
+    //     else{
+    //         navigate('/chatcustomer');
+    //         localStorage.setItem('role', 'customer');
+    //     }
+    // })
+    if(data.get('row-radio-buttons-group') === 'agent'){
+        navigate('/chat');
+        localStorage.setItem('role', 'agent');
+    }
+    else{
+        navigate('/chatcust');
+        localStorage.setItem('role', 'customer');  
+    }
+    localStorage.setItem('username', data.get('email'));
   };
 
   const validateInputs = () => {

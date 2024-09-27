@@ -1,80 +1,109 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "../App.css";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:5000');
 
 export default function ChatCustomer() {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
-    const [conversation, setConversation] = useState([ ]);
     const [priority, setPriority] = useState('');
+    const [username, setUsername] = useState(localStorage.getItem('username') || '');
+    const [agentName, setAgentName] = useState('null');
 
+    useEffect(() => {
+        const handleReceiveMessage = (data) => {
+            if (data.customerId === socket.id) { // Ensure it's the right recipient
+                if (data.agentName) {
+                    setAgentName(data.agentName);
+                }
+                setMessages(prevMessages => [...prevMessages, data.message]);
+            }
+        };
+
+        socket.on('receiveMessage', handleReceiveMessage);
+
+        return () => {
+            socket.off('receiveMessage', handleReceiveMessage);
+        };
+    }, []);
+
+    const handleStartChat = (priority) => {
+        const initialMessage = {
+            customerId: socket.id,
+            username: username,
+            priority: priority
+        };
+        socket.emit('initiateChat', initialMessage);
+        setPriority(priority);
+    };
 
     const handleInputChange = (e) => {
         setNewMessage(e.target.value);
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (newMessage.trim() !== '') {
-          setMessages([...messages, { text: newMessage, isYou: true }]);
-          setNewMessage('');
+            const messageData = {
+                customerId: socket.id,
+                message: newMessage
+            };
+            socket.emit('sendMessage', messageData);
+            setMessages(prevMessages => [...prevMessages, newMessage]);
+            setNewMessage('');
         }
     };
-    const [alignment, setAlignment] = React.useState('web');
 
-    const handleChange = (event, newAlignment) => {
-        setAlignment(newAlignment);
-    };
     return (
-        <>
-            <div className="chatpage">
-            <div className="chatpage--right">
-                <div className="chatpage--rightnavbar">
-                    <Avatar/>
-                    <div className="chatpage--rightfriendinfo">
-                        <p className="chatpage--rightfriendname">Agent---</p>
-                        <p className="chatpage--rightfriendstat"></p>
-                    </div>
-                </div>
+        <div className="chatpage">
+            <div className="chatpage--rightcust">
+                {   
+                    messages.length > 1 && (
+                    <div className="chatpage--rightnavbar">
+                        <Avatar />
+                        <div className="chatpage--rightfriendinfo">
+                            <p className="chatpage--rightfriendname">Agent {agentName}</p>
+                            <p className="chatpage--rightfriendstat"></p>
+                        </div>
+                    </div>)}
                 <div className="chatpage--rightchats">
-                    {
-                        priority === '' ? 
+                    {priority === '' && (
                         <div className="chatpage--priority">
                             <h1>Choose a priority</h1>
-                            <div>
-                            <Button variant="contained" onClick={() => setPriority('low')}>Low</Button>
-                            <Button variant="contained" onClick={() => setPriority('medium')}>Medium</Button>
-                            <Button variant="contained" onClick={() => setPriority('high')}>High</Button>
-                            </div>
+                            <Button variant="contained" onClick={() => handleStartChat('low')}>Low</Button>
+                            <Button variant="contained" onClick={() => handleStartChat('medium')}>Medium</Button>
+                            <Button variant="contained" onClick={() => handleStartChat('high')}>High</Button>
                         </div>
-                        :
-                        <div className="chatpage--container">
-                        {messages.map((message, index) => (
-                            <div key={index} className={`chatpage--message ${message.isYou ? 'chatpage--message-me' : 'chatpage--message-them'}`}>
-                                <p>{message.text}</p>
-                            </div>
-                        ))}
+                    )}
+                    {messages.length === 1 && (
+                        <div className="chatpage--priority">
+                            <h1>Wait while we connect you to an agent...</h1>
+                        </div>
+                    )}
+                    {messages.length > 1 && messages.map((message, index) => (
+                        <div key={index} className={`chatpage--chat.you`}>
+                            <p>{message}</p>
+                        </div>
+                    ))}
+                </div>
+                {messages.length > 1 && (
+                    <div className="chatpage--rightsendmessage">
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                placeholder="Type your message..."
+                                value={newMessage}
+                                onChange={handleInputChange}
+                                className="chatpage--chatinput"
+                            />
+                            <button className='chatpage--sendchat' type="submit"><span className="material-symbols-outlined">send</span></button>
+                        </form>
                     </div>
-                    }
-                </div>
-                <div className="chatpage--rightsendmessage">
-                    <form onSubmit={handleSubmit} >
-                        <input
-                        type="text"
-                        placeholder="Type your message..."
-                        value={newMessage}
-                        onChange={handleInputChange}
-                        className="chatpage--chatinput"
-                        />
-                        <button className='chatpage--sendchat' type="submit"><span className="material-symbols-outlined">send</span></button>
-                    </form>
-                </div>
+                )}
             </div>
         </div>
-        </>
-        
-    )
+    );
 }

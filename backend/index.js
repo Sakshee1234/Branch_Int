@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken")
 const JWT_SECRET = "asdfghjnbvcxsrtyuiopppjhgcxm/poiuytrewqasdfghjlmnbvcx/poiuytrewqafghjklmnbvcxz";
 const connectDB = require('./config/db');
 const cookieParser = require("cookie-parser");
+const socketIo = require("socket.io");
 const port = process.env.PORT || 5000
 connectDB();
 
@@ -17,6 +18,9 @@ app.use(cookieParser());
 
 require("./models/users");
 const User = mongoose.model("User");
+
+let chatQueue = [];
+let activeChats = {};
 
 //signin
 app.post('/signin', async (req, res) => {
@@ -40,6 +44,10 @@ app.post('/signin', async (req, res) => {
     });
     
     res.json({ token, username: user.name});
+});
+
+app.post('/startchat', async (req, res) => {
+    
 });
 
 app.listen(4000, () => { 
