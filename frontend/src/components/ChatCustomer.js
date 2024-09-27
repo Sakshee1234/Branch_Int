@@ -12,6 +12,7 @@ export default function ChatCustomer() {
     const [priority, setPriority] = useState('');
     const [username, setUsername] = useState(localStorage.getItem('username') || '');
     const [agentName, setAgentName] = useState('null');
+    const [wait,setWait]=useState(false);
 
     useEffect(() => {
         const handleReceiveMessage = (data) => {
@@ -20,6 +21,7 @@ export default function ChatCustomer() {
                     setAgentName(data.agentName);
                 }
                 setMessages(prevMessages => [...prevMessages, data.message]);
+                setWait(false);
             }
         };
 
@@ -38,6 +40,7 @@ export default function ChatCustomer() {
         };
         socket.emit('initiateChat', initialMessage);
         setPriority(priority);
+        setWait(true);
     };
 
     const handleInputChange = (e) => {
@@ -61,7 +64,7 @@ export default function ChatCustomer() {
         <div className="chatpage">
             <div className="chatpage--rightcust">
                 {   
-                    messages.length > 1 && (
+                    priority!='' && !wait && (
                     <div className="chatpage--rightnavbar">
                         <Avatar />
                         <div className="chatpage--rightfriendinfo">
@@ -78,18 +81,18 @@ export default function ChatCustomer() {
                             <Button variant="contained" onClick={() => handleStartChat('high')}>High</Button>
                         </div>
                     )}
-                    {messages.length === 1 && (
+                    {wait && (
                         <div className="chatpage--priority">
                             <h1>Wait while we connect you to an agent...</h1>
                         </div>
                     )}
-                    {messages.length > 1 && messages.map((message, index) => (
-                        <div key={index} className={`chatpage--chat.you`}>
-                            <p>{message}</p>
+                    {!wait && messages.map((message, index) => (
+                        <div key={index} >
+                            <p className="chatpage--message">{message}</p>
                         </div>
                     ))}
                 </div>
-                {messages.length > 1 && (
+                {priority!='' && !wait && (
                     <div className="chatpage--rightsendmessage">
                         <form onSubmit={handleSubmit}>
                             <input
@@ -99,7 +102,8 @@ export default function ChatCustomer() {
                                 onChange={handleInputChange}
                                 className="chatpage--chatinput"
                             />
-                            <button className='chatpage--sendchat' type="submit"><span className="material-symbols-outlined">send</span></button>
+                            {/* <button className='chatpage--sendchat' type="submit"><span className="material-symbols-outlined">send</span></button> */}
+                            <Button variant="contained" type="submit">Send</Button>
                         </form>
                     </div>
                 )}

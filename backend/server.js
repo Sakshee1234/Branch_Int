@@ -21,6 +21,10 @@ let activeChats = {};
 io.on("connection", (socket) => {
     console.log("New client connected");
 
+    socket.on("requestQueue", () => {
+        io.emit("updateQueue", chatQueue);
+    });
+
     socket.on("initiateChat", (data) => {
         const chatData = { ...data, customerId: socket.id };
         chatQueue.push(chatData);

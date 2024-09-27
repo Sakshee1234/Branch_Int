@@ -13,7 +13,7 @@
   align-items: stretch; /* Stretch the content to fill the container */
   width: 75%;
   height: 100vh;
-  background-color: #D4A8AE;
+  background-color: #e3f2fd;
   border-radius: 0em 1em 1em 0em;
   overflow: hidden; /* Hide overflow if necessary */
 }
@@ -24,22 +24,25 @@
   align-items: stretch; /* Stretch the content to fill the container */
   width: 100%;
   height: 100vh;
-  background-color: #D4A8AE;
+  background-color:#e3f2fd;
   border-radius: 0em 1em 1em 0em;
   overflow: hidden; /* Hide overflow if necessary */
 }
 
 /* Style the right navbar */
 .chatpage--rightnavbar {
-  background-color: #e5c6ca;
+  background-color: #bbdefb;
   width: 100%;
-  height: 16%;
+  height: 8%;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  padding: 1%;
 }
-
+.chatpage--rightfriendinfo{
+  padding-left: 1%;
+}
 .chatpage--rightnavbar img {
   border-radius: 50%;
   width: 7%;
@@ -50,7 +53,7 @@
 .chatpage--rightsendmessage{
   display: flex;
   margin-top:auto;
-  background-color:rgb(211, 209, 209);
+  /* background-color:rgb(211, 209, 209); */
   padding:1%;
   padding-top:0;
 }
@@ -79,10 +82,11 @@
 .chatpage--chatinput{
   flex: 1;
   padding: 10px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 5px;
   font-size: 16px;
   outline: none;
+  width:90%;
 }
 .chatpage--rightchats{
   display: flex;
@@ -94,7 +98,7 @@
   margin: 20px auto;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
   padding: 20px;
   overflow-y: auto;
   max-height: 500px;
@@ -106,13 +110,79 @@
   margin-bottom: 20px;
   padding: 5px;
 }
+.chatpage--contactlist-title {
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
 
+.chatpage--contactlist-title h2 {
+  margin: 0;
+  font-size: 1.5em;
+  color: #333;
+}
 .chat-person.you {
   justify-content: flex-end; /* User's chat on the right */
   background-color: #797777;
   padding:2px;
 }
+.chatpage--welcome {
+  text-align: center;
+  padding: 50px;
+  /* background-color: #f9f9f9; */
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  margin: 20px;
+}
 
+.chatpage--welcome h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.chatpage--welcome p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+
+.chatpage--instructions {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.chatpage--instructions p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.chatpage--instructions ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.chatpage--instructions li {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.chatpage--visual-indicator {
+  margin-top: 20px;
+  font-size: 1.5em;
+  color: #007bff;
+}
+.chatpage--message{
+  display: flex;
+  flex-direction: column;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: #797777;
+  width: fit-content;
+  margin: 1%;
+  border-radius: 0.5em;
+}
 .chat-person.friend {
   justify-content: flex-start; /* Friend's chat on the left */
 }
@@ -147,7 +217,7 @@
   margin:6% 2%;
 }
 .chatpage--search{
-  background-color:#D4A8AE;
+  /* background-color:#D4A8AE; */
   border: none;
   border-radius: 0.5em;
   width:100%;
@@ -158,6 +228,7 @@
   flex-direction: column;
   border-bottom: 1px solid black;
   width: 100%;
+  margin: 1%;
   padding-bottom:1%;
 }
 .chatpage--contactlastchat{
@@ -178,7 +249,7 @@
 }
 
 .chatpage--priority{
-  background-color: #D4A8AE;
+  /* background-color: #D4A8AE; */
   border-radius: 0.5em;
   padding: 2%;
   margin: 2%;
