@@ -3,6 +3,7 @@ import "../App.css";
 import { Avatar } from '@mui/material';
 import Button from '@mui/material/Button';
 import io from 'socket.io-client';
+// import { set } from 'mongoose';
 const socket = io('http://localhost:5000');
 
 export default function Chat() {
@@ -27,7 +28,11 @@ export default function Chat() {
 
         const handleReceiveMessage = (data) => {
             if (data.agentId === socket.id) {
-                setMessages(prevMessages => [...prevMessages, data.message]);
+                // if (currentChat && currentChat.customerId === data.customerId) {
+                //     setMessages(prevMessages => [...prevMessages, `${data.message}(customer)`]);
+                // }
+                setMessages(prevMessages => [...prevMessages, `${data.message}(customer)`]);
+                console.log(data.message);
             }
         };
 
@@ -54,6 +59,7 @@ export default function Chat() {
                 message: newMessage
             };
             socket.emit('sendMessage', messageData);
+            setMessages(prevMessages => [...prevMessages, newMessage]);
             setNewMessage('');
         }
     };
@@ -96,6 +102,11 @@ export default function Chat() {
                 )}
                 <div className="chatpage--rightchats">
                     {messages.map((message, index) => (
+                        message.includes('(customer)') ?
+                        <div key={index} >
+                            <p className="chatpage--messagefrom" >{message.slice(0, -10)}</p>
+                        </div>
+                        :
                         <div key={index} >
                             <p className="chatpage--message" >{message}</p>
                         </div>

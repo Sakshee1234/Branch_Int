@@ -184,10 +184,24 @@
   padding-right: 1%;
   padding-top: 1%;
   padding-bottom: 1%;
-  background-color: #797777;
+  background-color: #bbdefb;
   width: fit-content;
   margin: 1%;
   border-radius: 0.5em;
+}
+.chatpage--messagefrom{
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  background-color: white;
+  width: fit-content;
+  margin: 1%;
+  border-radius: 0.5em;
+  margin-left: auto;
 }
 .chat-person.friend {
   justify-content: flex-start; /* Friend's chat on the left */

@@ -20,7 +20,7 @@ export default function ChatCustomer() {
                 if (data.agentName) {
                     setAgentName(data.agentName);
                 }
-                setMessages(prevMessages => [...prevMessages, data.message]);
+                setMessages(prevMessages => [...prevMessages,`${data.message}(agent)`]);
                 setWait(false);
             }
         };
@@ -29,6 +29,7 @@ export default function ChatCustomer() {
 
         return () => {
             socket.off('receiveMessage', handleReceiveMessage);
+
         };
     }, []);
 
@@ -52,7 +53,7 @@ export default function ChatCustomer() {
         if (newMessage.trim() !== '') {
             const messageData = {
                 customerId: socket.id,
-                message: newMessage
+                message: newMessage,
             };
             socket.emit('sendMessage', messageData);
             setMessages(prevMessages => [...prevMessages, newMessage]);
@@ -101,8 +102,13 @@ export default function ChatCustomer() {
                         </div>
                     )}
                     {!wait && messages.map((message, index) => (
+                        message.includes('(agent)') ?
                         <div key={index} >
-                            <p className="chatpage--message">{message}</p>
+                            <p className="chatpage--messagefrom" >{message.slice(0, -7)}</p>
+                        </div>
+                        :
+                        <div key={index} >
+                            <p className="chatpage--message" >{message}</p>
                         </div>
                     ))}
                 </div>

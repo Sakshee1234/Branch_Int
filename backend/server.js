@@ -20,9 +20,9 @@ let activeChats = {};
 
 io.on("connection", (socket) => {
     console.log("New client connected");
-
+    
     socket.on("requestQueue", () => {
-        io.emit("updateQueue", chatQueue);
+        socket.emit("updateQueue", chatQueue);
     });
 
     socket.on("initiateChat", (data) => {
@@ -48,12 +48,12 @@ io.on("connection", (socket) => {
     socket.on("sendMessage", (data) => {
         const { customerId, agentId, message } = data;
 
-        if (customerId && activeChats[customerId]) {
+        if (customerId && activeChats[customerId] && !agentId) {
             const assignedAgentId = activeChats[customerId];
             io.to(assignedAgentId).emit("receiveMessage", { message, agentId: assignedAgentId });
         }
 
-        if (agentId && activeChats[customerId]) {
+        else if (customerId && activeChats[customerId]) {
             io.to(customerId).emit("receiveMessage", { message, customerId });
         }
     });
