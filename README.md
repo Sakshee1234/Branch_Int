@@ -6,21 +6,21 @@ $ git clone https://github.com/Sakshee1234/Branch_Int
 $ cd Branch_Int
 ```
 
-##Backend Setup
+## Backend Setup
 ```
 $ cd backend
 $ npm install
 $ node server.js
 ```
 
-##Frontend Setup
+## Frontend Setup
 ```
 $ cd ../frontend
 $ npm install
 $ npm start
 ```
 
-#Accessing the Application:
+# Accessing the Application:
 
 Open your web browser and go to `http://localhost:3000` to view the application.
 
