@@ -17,7 +17,6 @@ export default function Chat() {
     useEffect(() => {
         const handleUpdateQueue = (queue) => {
             setChatQueue(queue);
-            //sort on basis of priority high above etc
             const priorityOrder = { high: 1, medium: 2, low: 3 };
 
             const sortedQueue = queue.sort((a, b) => {
@@ -28,9 +27,6 @@ export default function Chat() {
 
         const handleReceiveMessage = (data) => {
             if (data.agentId === socket.id) {
-                // if (currentChat && currentChat.customerId === data.customerId) {
-                //     setMessages(prevMessages => [...prevMessages, `${data.message}(customer)`]);
-                // }
                 setMessages(prevMessages => [...prevMessages, `${data.message}(customer)`]);
                 console.log(data.message);
             }
