@@ -24,7 +24,8 @@ $ npm start
 
 Open your web browser and go to `http://localhost:3000` to view the application.
 
-#Project Structure:
+# Project Structure:
 
 **`backend/:`** Contains the Express server with Socket.io backend code.
+
 **`frontend/:`** Contains the React.js frontend code.
