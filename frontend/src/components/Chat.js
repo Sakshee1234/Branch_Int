@@ -1,132 +1,121 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
-import Fab from '@material-ui/core/Fab';
-import SendIcon from '@material-ui/icons/Send';
+import React, { useState } from 'react';
+import "../App.css";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { Avatar } from '@mui/material';
+import Button from '@mui/material/Button';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-  chatSection: {
-    width: '100%',
-    height: '80vh'
-  },
-  headBG: {
-      backgroundColor: '#e0e0e0'
-  },
-  borderRight500: {
-      borderRight: '1px solid #e0e0e0'
-  },
-  messageArea: {
-    height: '70vh',
-    overflowY: 'auto'
-  }
-});
+export default function Chat() {
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
 
-const Chat = () => {
-  const classes = useStyles();
+    const handleInputChange = (e) => {
+        setNewMessage(e.target.value);
+    };
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (newMessage.trim() !== '') {
+          setMessages([...messages, { text: newMessage, isYou: true }]);
+          setNewMessage('');
+        }
+    };
+    const changeChatPerson = (index) => {
+        return () => {
+            setCurrChatPerson(contactsuggestion[index]);
+        }
+    };
+    const [contactsuggestion, setContactSuggestion] = useState([
+        { name: 'Powerpuff girls', lastmessage: 'Hi' },
+        {  name: 'Alex', lastmessage: 'Hi' },
+        {name: 'Mr.Bean', lastmessage: 'Hi' },
+        { name: 'A', lastmessage: 'Hi' },
+        {name: 'V', lastmessage: 'Hi' },
+        { name: 'V', lastmessage: 'Hi' },
+        { name: 'V', lastmessage: 'Hi' },
+        { name: 'V', lastmessage: 'Hi' },
+        {  name: 'V', lastmessage: 'Hi' },
+    ]);
+      
+    const [currchatperson, setCurrChatPerson] = useState(contactsuggestion[1]);
+    
+    const [alignment, setAlignment] = React.useState('web');
 
-  return (
-      <div>
-        <Grid container>
-            <Grid item xs={12} >
-                <Typography variant="h5" className="header-message">Chat</Typography>
-            </Grid>
-        </Grid>
-        <Grid container component={Paper} className={classes.chatSection}>
-            <Grid item xs={3} className={classes.borderRight500}>
-                <List>
-                    <ListItem button key="RemySharp">
-                        <ListItemIcon>
-                        <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                        </ListItemIcon>
-                        <ListItemText primary="John Wick"></ListItemText>
-                    </ListItem>
-                </List>
-                <Divider />
-                <Grid item xs={12} style={{padding: '10px'}}>
-                    <TextField id="outlined-basic-email" label="Search" variant="outlined" fullWidth />
-                </Grid>
-                <Divider />
-                <List>
-                    <ListItem button key="RemySharp">
-                        <ListItemIcon>
-                            <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
-                        </ListItemIcon>
-                        <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-                        <ListItemText secondary="online" align="right"></ListItemText>
-                    </ListItem>
-                    <ListItem button key="Alice">
-                        <ListItemIcon>
-                            <Avatar alt="Alice" src="https://material-ui.com/static/images/avatar/3.jpg" />
-                        </ListItemIcon>
-                        <ListItemText primary="Alice">Alice</ListItemText>
-                    </ListItem>
-                    <ListItem button key="CindyBaker">
-                        <ListItemIcon>
-                            <Avatar alt="Cindy Baker" src="https://material-ui.com/static/images/avatar/2.jpg" />
-                        </ListItemIcon>
-                        <ListItemText primary="Cindy Baker">Cindy Baker</ListItemText>
-                    </ListItem>
-                </List>
-            </Grid>
-            <Grid item xs={9}>
-                <List className={classes.messageArea}>
-                    <ListItem key="1">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Hey man, What's up ?"></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="09:30"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="2">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" primary="Hey, Iam Good! What about you ?"></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="left" secondary="09:31"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                    <ListItem key="3">
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" primary="Cool. i am good, let's catch up!"></ListItemText>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <ListItemText align="right" secondary="10:30"></ListItemText>
-                            </Grid>
-                        </Grid>
-                    </ListItem>
-                </List>
-                <Divider />
-                <Grid container style={{padding: '20px'}}>
-                    <Grid item xs={11}>
-                        <TextField id="outlined-basic-email" label="Type Something" fullWidth />
-                    </Grid>
-                    <Grid xs={1} align="right">
-                        <Fab color="primary" aria-label="add"><SendIcon /></Fab>
-                    </Grid>
-                </Grid>
-            </Grid>
-        </Grid>
-      </div>
-  );
+    const handleChange = (event, newAlignment) => {
+        setAlignment(newAlignment);
+    };
+    return (
+        <div className="chatpage">
+            <div className="chatpage--left">
+                    {/* <input type="text" placeholder="Search or start new chat" className="chatpage--search"/> */}
+                {/* <hr/> */}
+                <ToggleButtonGroup
+                    color="primary"
+                    value={alignment}
+                    exclusive
+                    onChange={handleChange}
+                    aria-label="Platform"
+                    >
+                    <ToggleButton value="inq">In Queue</ToggleButton>
+                    <ToggleButton value="current">Current Chat</ToggleButton>
+                    <ToggleButton value="previous">Previous Chats</ToggleButton>
+                </ToggleButtonGroup>
+                <div className='chatpage--contactlist'>
+                    {
+                        alignment=='inq' && 
+                        <>
+                        {contactsuggestion.map((contactsuggestion, index) => (
+                            <div className="chatpage--contact" onClick={changeChatPerson(index)}>
+                                <Avatar alt="/" />
+                                <div className="chatpage--contactdetails">
+                                    <span className="chatpage--contactname" >{contactsuggestion.name}</span>
+                                    <span className="chatpage--contactlastchat">{contactsuggestion.lastmessage}</span>
+                                    
+                                </div>
+                                <Button
+                                    // fullWidth
+                                    variant="contained"
+                                    // onClick={validateInputs}
+                                    >
+                                    +
+                                </Button>
+                            </div>
+                        ))} 
+                        </>  
+                    }
+                </div>
+            </div>
+
+            <div className="chatpage--right">
+                <div className="chatpage--rightnavbar">
+                    <Avatar/>
+                    <div className="chatpage--rightfriendinfo">
+                        <p className="chatpage--rightfriendname">{currchatperson.name}</p>
+                        <p className="chatpage--rightfriendstat"></p>
+                    </div>
+                </div>
+                <div className="chatpage--rightchats">
+                    <div className="chatpage--container">
+                        {messages.map((message, index) => (
+                            <div key={index} className={`chatpage--message ${message.isYou ? 'chatpage--message-me' : 'chatpage--message-them'}`}>
+                                <p>{message.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="chatpage--rightsendmessage">
+                    <form onSubmit={handleSubmit} >
+                        <input
+                        type="text"
+                        placeholder="Type your message..."
+                        value={newMessage}
+                        onChange={handleInputChange}
+                        className="chatpage--chatinput"
+                        />
+                        <button className='chatpage--sendchat' type="submit"><span className="material-symbols-outlined">send</span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    )
 }
-
-export default Chat;

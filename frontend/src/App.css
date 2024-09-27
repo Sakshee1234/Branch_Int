@@ -1,38 +1,185 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.chatpage{
+  display: flex;
+  flex-direction: row;
+  background-color: #f6f6f6;
+  padding:2%;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Adjust the styles for the right panel (chat messages and input field) */
+.chatpage--right {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch; /* Stretch the content to fill the container */
+  width: 75%;
+  height: 100vh;
+  background-color: #D4A8AE;
+  border-radius: 0em 1em 1em 0em;
+  overflow: hidden; /* Hide overflow if necessary */
+}
+
+/* Style the right navbar */
+.chatpage--rightnavbar {
+  background-color: #e5c6ca;
+  width: 100%;
+  height: 16%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.chatpage--rightnavbar img {
+  border-radius: 50%;
+  width: 7%;
+  height: auto;
+  margin-left: 3%;
+  margin-right: 2%;
+}
+.chatpage--rightsendmessage{
+  display: flex;
+  margin-top:auto;
+  background-color:rgb(211, 209, 209);
+  padding:1%;
+  padding-top:0;
+}
+.chatpage--rightsendmessage form{
+ width:100%;
+}
+.chatpage--rightfriendinfo {
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.chatpage--rightfriendname {
+  font-size: 20px;
+  font-weight: 500;
+}
+.chatpage--sendchat{
+  border:none;
+  background:none;
+  cursor:pointer;
+  font-size: 12px;
+}
+.chatpage--rightfriendname,
+.chatpage--rightfriendstat {
+  margin: 0;
+}
+.chatpage--chatinput{
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+.chatpage--rightchats{
+  display: flex;
+  flex-direction: column;
+  
+}
+.chatpage-container {
+  max-width: 600px;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+/* Chat message styles (align user's messages to the right) */
+.chat-person {
+  display: flex;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+
+.chat-person.you {
+  justify-content: flex-end; /* User's chat on the right */
+}
+
+.chat-person.friend {
+  justify-content: flex-start; /* Friend's chat on the left */
+}
+
+.chat-bubble {
+  background-color: #e6e6e6;
+  border-radius: 12px;
+  padding: 10px 15px;
+  max-width: 70%;
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chatpage--left{
+  width:25%;
+  height:91.5vh;
+  background-color: white;
+  border-radius:1em 0em 0em 1em;
+  padding:2%;
+}
+
+.chatpage--contactlist{
+  display: flex;
+  flex-direction: column;
+  overflow-y:scroll;
+  height: 80vh;
+}
+.chatpage--contact{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin:6% 2%;
+}
+.chatpage--search{
+  background-color:#D4A8AE;
+  border: none;
+  border-radius: 0.5em;
+  width:100%;
+  padding:2% 0%;
+}
+.chatpage--contactdetails{
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid black;
+  width: 100%;
+  padding-bottom:1%;
+}
+.chatpage--contactlastchat{
+  font-size: 12px;
+  color: #797777;
+}
+
+.chatpage--contact img{
+  width: 38px;
+  height: 36px;
+  border: 1px solid black;
+  border-radius:50%;
+  margin-right:2%
+}
+
+.chatpage--contactlist::-webkit-scrollbar {
+  width: 0px; 
+}
+
+.chatpage--priority{
+  background-color: #D4A8AE;
+  border-radius: 0.5em;
+  padding: 2%;
+  margin: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.chatpage--priority div{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* width: 100%; */
+}
+.chatpage--priority div Button{
+  margin:1%;
 }
