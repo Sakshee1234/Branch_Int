@@ -74,12 +74,26 @@ export default function ChatCustomer() {
                     </div>)}
                 <div className="chatpage--rightchats">
                     {priority === '' && (
+                        <>
+                        <div className="chatpage--welcomecust">
+                            <h1>Welcome, {username}!</h1>
+                            
+                            <div className="chatpage--instructions">
+                            <p><strong>Instructions:</strong></p>
+                                <ul>
+                                    <li>Mark <strong>High</strong> for chats about loan approval.</li>
+                                    <li>Mark <strong>Medium</strong> for other inquiries.</li>
+                                    <li>Mark <strong>Low</strong> for questions about updating information on your Branch account.</li>
+                                </ul>
+                            </div>
+                        </div>
                         <div className="chatpage--priority">
                             <h1>Choose a priority</h1>
                             <Button variant="contained" onClick={() => handleStartChat('low')}>Low</Button>
                             <Button variant="contained" onClick={() => handleStartChat('medium')}>Medium</Button>
                             <Button variant="contained" onClick={() => handleStartChat('high')}>High</Button>
                         </div>
+                        </>
                     )}
                     {wait && (
                         <div className="chatpage--priority">
